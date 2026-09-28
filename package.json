@@ -1,0 +1,16 @@
+{
+  "name": "tack",
+  "version": "1.0.0",
+  "description": "Tack is a note taking app that \"sticks\" around your screen",
+  "main": "note.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "git@github-personal:Twith2e/tack.git",
+  "author": "Abdulbasit A. Adebajo",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^44.4.5"
+  }
+}
