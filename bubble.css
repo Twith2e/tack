@@ -1,0 +1,46 @@
+/* the shared color-scheme would paint an opaque canvas behind the transparent window */
+:root {
+    color-scheme: normal;
+}
+
+html {
+    background: transparent;
+}
+
+body.bubble-window {
+    align-items: center;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+}
+
+.bubble {
+    align-items: center;
+    background: var(--note-bg);
+    border: 2px solid var(--header-bg);
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    height: 32px;
+    justify-content: center;
+    touch-action: none;
+    transition: transform 100ms ease;
+    user-select: none;
+    width: 32px;
+}
+
+.bubble:hover {
+    transform: scale(1.06);
+}
+
+.bubble:active {
+    transform: scale(0.96);
+}
+
+.bubble svg {
+    height: 15px;
+    pointer-events: none;
+    width: 15px;
+}

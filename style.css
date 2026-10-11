@@ -1,0 +1,389 @@
+:root {
+    color-scheme: light dark;
+    --note-bg: #fff8c6;
+    --header-bg: #f6e98b;
+    --text: #1f1f1f;
+    --muted: #666;
+    --border: rgba(0, 0, 0, 0.12);
+    --hover: rgba(0, 0, 0, 0.1);
+    --active: rgba(0, 0, 0, 0.18);
+    --danger: #c42b1c;
+    --list-bg: #f3f1e7;
+    --surface: #fff;
+    --field-border: #d8d4c0;
+    --menu-text: #1f1f1f;
+    --menu-hover: rgba(0, 0, 0, 0.08);
+    --menu-border: rgba(0, 0, 0, 0.12);
+    --header-height: 32px;
+    --font: system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --note-bg: #2b2b2b;
+        --header-bg: #1f1f1f;
+        --text: #ececec;
+        --muted: #a0a0a0;
+        --border: rgba(255, 255, 255, 0.12);
+        --hover: rgba(255, 255, 255, 0.1);
+        --active: rgba(255, 255, 255, 0.2);
+        --danger: #ff6b5e;
+        --list-bg: #1c1c1c;
+        --surface: #2b2b2b;
+        --field-border: #444;
+        --menu-text: #ececec;
+        --menu-hover: rgba(255, 255, 255, 0.1);
+        --menu-border: rgba(255, 255, 255, 0.12);
+    }
+}
+
+/* Note colors: set on <html> in a note window and on each card in the list */
+[data-color="yellow"] { --note-bg: #fff8c6; --header-bg: #f6e98b; }
+[data-color="green"] { --note-bg: #e2f4d3; --header-bg: #c3e6a8; }
+[data-color="pink"] { --note-bg: #fde0ea; --header-bg: #f7bdd1; }
+[data-color="purple"] { --note-bg: #ece0f8; --header-bg: #d4bdf0; }
+[data-color="blue"] { --note-bg: #d9ecfb; --header-bg: #b3d8f5; }
+[data-color="gray"] { --note-bg: #ececec; --header-bg: #d4d4d4; }
+[data-color="charcoal"] {
+    --note-bg: #4a4a4a;
+    --header-bg: #363636;
+    --text: #f2f2f2;
+    --muted: #c8c8c8;
+    --hover: rgba(255, 255, 255, 0.12);
+    --active: rgba(255, 255, 255, 0.22);
+    --border: rgba(255, 255, 255, 0.14);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-color="yellow"] { --note-bg: #4a4420; --header-bg: #3a3517; }
+    [data-color="green"] { --note-bg: #2f4226; --header-bg: #26361f; }
+    [data-color="pink"] { --note-bg: #4a2a37; --header-bg: #3a212b; }
+    [data-color="purple"] { --note-bg: #3a2f4d; --header-bg: #2e253d; }
+    [data-color="blue"] { --note-bg: #243a4d; --header-bg: #1c2e3d; }
+    [data-color="gray"] { --note-bg: #3a3a3a; --header-bg: #2e2e2e; }
+    [data-color="charcoal"] { --note-bg: #2b2b2b; --header-bg: #1f1f1f; }
+}
+
+[data-platform="win32"] {
+    --font: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+}
+
+[data-platform="darwin"] {
+    --font: -apple-system, "SF Pro Text", system-ui, sans-serif;
+}
+
+[data-platform="linux"] {
+    --font: system-ui, "Ubuntu", "Cantarell", "Noto Sans", sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--note-bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font);
+    font-size: 14px;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Header: draggable titlebar, actions only visible while the window is focused */
+.titlebar {
+    -webkit-app-region: drag;
+    app-region: drag;
+    align-items: stretch;
+    background: var(--header-bg);
+    display: flex;
+    flex: none;
+    height: var(--header-height);
+    justify-content: space-between;
+    user-select: none;
+}
+
+.actions {
+    -webkit-app-region: no-drag;
+    app-region: no-drag;
+    display: flex;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 120ms ease;
+}
+
+body.focused .actions {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.titlebar-title {
+    align-self: center;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.icon-btn {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    cursor: default;
+    display: flex;
+    justify-content: center;
+    width: 40px;
+}
+
+.icon-btn svg {
+    height: 16px;
+    width: 16px;
+}
+
+.icon-btn:hover {
+    background: var(--hover);
+}
+
+/* Windows: caption-button style, red close */
+[data-platform="win32"] .icon-btn {
+    width: 46px;
+}
+
+[data-platform="win32"] #close-note:hover {
+    background: #e81123;
+    color: #fff;
+}
+
+/* macOS: native traffic lights sit on the left, so leave room and drop our close button */
+[data-platform="darwin"] .titlebar {
+    padding-left: 76px;
+    padding-right: 6px;
+}
+
+[data-platform="darwin"] #close-note {
+    display: none;
+}
+
+[data-platform="darwin"] .icon-btn {
+    border-radius: 6px;
+    height: 24px;
+    margin-top: 4px;
+    width: 28px;
+}
+
+/* Linux: rounded buttons, close on the right */
+[data-platform="linux"] .titlebar {
+    padding: 0 4px;
+}
+
+[data-platform="linux"] .icon-btn {
+    border-radius: 6px;
+    height: 24px;
+    margin-top: 4px;
+    width: 28px;
+}
+
+#note-ui {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    animation: spin 0.7s linear infinite;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    border-top-color: var(--text);
+    flex: none;
+    height: 16px;
+    width: 16px;
+}
+
+.loader {
+    align-items: center;
+    background: var(--note-bg);
+    display: none;
+    inset: 0;
+    justify-content: center;
+    position: absolute;
+}
+
+body.loading .loader {
+    display: flex;
+}
+
+body.loading #note-toolbar {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.save-status {
+    align-items: center;
+    color: var(--muted);
+    display: flex;
+    font-size: 11px;
+    gap: 6px;
+    margin-left: auto;
+    opacity: 0;
+    padding-right: 4px;
+    transition: opacity 150ms ease;
+}
+
+.save-status[data-state] {
+    opacity: 1;
+}
+
+.save-status:not([data-state="saving"]) .spinner {
+    display: none;
+}
+
+.save-status[data-state="error"] {
+    color: var(--danger);
+}
+
+/* Menu dropdown */
+.menu {
+    background: var(--surface);
+    border: 1px solid var(--field-border);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    color: var(--menu-text);
+    padding: 6px;
+    position: fixed;
+    right: 6px;
+    top: calc(var(--header-height) + 4px);
+    width: 216px;
+    z-index: 10;
+}
+
+.swatches {
+    display: flex;
+    gap: 6px;
+    justify-content: space-between;
+    padding: 6px 6px 8px;
+}
+
+.swatch {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    cursor: default;
+    height: 22px;
+    width: 22px;
+}
+
+.swatch[data-color="yellow"] { background: #f6e98b; }
+.swatch[data-color="green"] { background: #c3e6a8; }
+.swatch[data-color="pink"] { background: #f7bdd1; }
+.swatch[data-color="purple"] { background: #d4bdf0; }
+.swatch[data-color="blue"] { background: #b3d8f5; }
+.swatch[data-color="gray"] { background: #d4d4d4; }
+.swatch[data-color="charcoal"] { background: #4a4a4a; }
+
+.swatch[aria-checked="true"] {
+    box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--menu-text);
+}
+
+.menu-item {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 6px;
+    color: inherit;
+    cursor: default;
+    display: flex;
+    font: inherit;
+    gap: 10px;
+    height: 34px;
+    padding: 0 8px;
+    text-align: left;
+    width: 100%;
+}
+
+.menu-item:hover {
+    background: var(--menu-hover);
+}
+
+.menu-item svg {
+    flex: none;
+    height: 16px;
+    width: 16px;
+}
+
+.menu-label {
+    flex: 1;
+}
+
+.menu-item.danger {
+    color: var(--danger);
+}
+
+.menu-separator {
+    background: var(--menu-border);
+    height: 1px;
+    margin: 4px 2px;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+#note {
+    background: transparent;
+    border: 0;
+    color: inherit;
+    font: inherit;
+    height: 100%;
+    margin: 0;
+    outline: none;
+    overflow-y: auto;
+    padding: 10px;
+    white-space: pre-wrap;
+    width: 100%;
+    word-break: break-word;
+}
+
+#note ul {
+    padding-left: 1.3em;
+}
+
+#note-toolbar {
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 2px;
+    margin: 0;
+    padding: 6px 10px;
+}
+
+#note-toolbar button {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 4px;
+    color: inherit;
+    cursor: default;
+    display: flex;
+    height: 26px;
+    justify-content: center;
+    width: 28px;
+}
+
+#note-toolbar button svg {
+    height: 16px;
+    width: 16px;
+}
+
+#note-toolbar button:hover {
+    background: var(--hover);
+}
+
+#note-toolbar button.active {
+    background: var(--active);
+}
