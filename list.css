@@ -1,0 +1,207 @@
+body.list-window {
+    background: var(--list-bg);
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.view {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.search {
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--field-border);
+    border-radius: 6px;
+    display: flex;
+    flex: none;
+    gap: 8px;
+    margin: 10px 10px 4px;
+    padding: 0 8px;
+}
+
+.search svg {
+    color: var(--muted);
+    flex: none;
+    height: 14px;
+    width: 14px;
+}
+
+.search input {
+    background: transparent;
+    border: 0;
+    color: inherit;
+    flex: 1;
+    font: inherit;
+    outline: none;
+    padding: 7px 0;
+}
+
+#notes {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 6px 10px 10px;
+}
+
+.card {
+    background: var(--note-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+    color: var(--text);
+    cursor: pointer;
+    flex: none;
+    padding: 10px 12px;
+    position: relative;
+}
+
+.card:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.card-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.card-text.empty {
+    color: var(--muted);
+    font-style: italic;
+}
+
+.card-date {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 8px;
+}
+
+.card-delete {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 4px;
+    color: var(--muted);
+    cursor: pointer;
+    display: none;
+    height: 24px;
+    justify-content: center;
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    width: 24px;
+}
+
+.card:hover .card-delete {
+    display: flex;
+}
+
+.card-delete:hover {
+    background: var(--hover);
+    color: var(--danger);
+}
+
+.card-delete svg {
+    height: 14px;
+    width: 14px;
+}
+
+.empty-state {
+    color: var(--muted);
+    padding: 24px 0;
+    text-align: center;
+}
+
+/* Settings */
+.settings {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 14px;
+}
+
+.back-btn {
+    align-items: center;
+    align-self: flex-start;
+    background: transparent;
+    border: 0;
+    border-radius: 6px;
+    color: inherit;
+    cursor: default;
+    display: flex;
+    font: inherit;
+    gap: 6px;
+    padding: 4px 8px 4px 4px;
+}
+
+.back-btn:hover {
+    background: var(--hover);
+}
+
+.back-btn svg {
+    height: 16px;
+    width: 16px;
+}
+
+.settings-heading {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.segmented {
+    background: var(--surface);
+    border: 1px solid var(--field-border);
+    border-radius: 8px;
+    display: flex;
+    padding: 2px;
+}
+
+.segmented label {
+    flex: 1;
+}
+
+.segmented input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.segmented span {
+    border-radius: 6px;
+    cursor: default;
+    display: block;
+    padding: 6px 0;
+    text-align: center;
+}
+
+.segmented label:hover span {
+    background: var(--hover);
+}
+
+.segmented input:checked + span {
+    background: var(--header-bg);
+    font-weight: 600;
+}
+
+.segmented input:focus-visible + span {
+    outline: 2px solid var(--text);
+    outline-offset: -2px;
+}
+
+.settings-hint {
+    color: var(--muted);
+    font-size: 12px;
+}
